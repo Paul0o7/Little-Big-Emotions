@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Little Big Emotions</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+</head>
+
+<body>
+    <div id="divApplab">
+        <div id="MorD" class="screen">
+            <button id="Desktop">Desktop</button>
+            <button id="Mobile">Mobile</button>
+            <label id="device-select-label">What device are you playing on?</label>
+            <label id="copyright-label">Patent Pending © 2024 PolyForm Studios</label>
+        </div>
+
+        <div id="NameInputScreen" class="screen" style="display: none;">
+            <button id="credits-button">Credits</button>
+            <button id="data-button">Data</button>
+            <label id="name-input-label">Hello, tiny Titans. What is your name?</label>
+            <input type="text" id="name-input-field">
+            <button id="name-enter-button">Enter</button>
+        </div>
+
+        <div id="GreetingScreen" class="screen" style="display: none;">
+            <label id="greeting-message"></label>  <label id="welcome-message">Welcome to little big emotions.</label>
+            <button id="begin-button">Begin</button>
+        </div>
+
+        <div id="Gsad" class="screen" style="display: none;">
+            <label class="question-label">What Emotion is this person feeling?</label>
+            <img src="sad-unicorn.png" id="sad-image" class="emotion-image">
+            <div class="emotion-button-container">
+                <div class="emotion-option">
+                    <button id="SadButton" class="emotion-button sad-button">Sad!</button>
+                    <button id="SpeakerButtonSad" class="speaker-button"></button>
+                </div>
+                <div class="emotion-option">
+                    <button id="HappyButton" class="emotion-button happy-button">Happy!</button>
+                    <button id="SpeakerButtonHappy" class="speaker-button"></button>
+                </div>
+                <div class="emotion-option">
+                    <button id="ScaredButton" class="emotion-button scared-button">SCARED!</button>
+                    <button id="SpeakerButtonScared" class="speaker-button"></button>
+                </div>
+                <div class="emotion-option">
+                    <button id="AngryButton" class="emotion-button angry-button">Angry!</button>
+                    <button id="SpeakerButtonAngry" class="speaker-button"></button>
+                </div>
+            </div>
+            <img src="sad-gif.gif" id="sad-gif" class="hidden-gif">
+        </div>
+
+        <div id="Gangry" class="screen" style="display: none;">
+            <label class="question-label">What Emotion is this person feeling?</label>
+            <img src="angry-unicorn.png" id="angry-image" class="emotion-image">
+            <div class="emotion-button-container">
+                <div class="emotion-option">
+                    <button id="SadButton" class="emotion-button sad-button">Sad!</button>
+                    <button id="SpeakerButtonSad" class="speaker-button"></button>
+                </div>
+                <div class="emotion-option">
+                    <button id="HappyButton" class="emotion-button happy-button">Happy!</button>
+                    <button id="SpeakerButtonHappy" class="speaker-button"></button>
+                </div>
+                <div class="emotion-option">
+                    <button id="ScaredButton" class="emotion-button scared-button">SCARED!</button>
+                    <button id="SpeakerButtonScared" class="speaker-button"></button>
+                </div>
+                <div class="emotion-option">
+                    <button id="AngryButton" class="emotion-button angry-button">Angry!</button>
+                    <button id="SpeakerButtonAngry" class="speaker-button"></button>
+                </div>
+            </div>
+            <img src="angry-gif.gif" id="angry-gif" class="hidden-gif">
+        </div>
+
+        <div id="Ghappy" class="screen" style="display: none;">
+            <label class="question-label">What Emotion is this person feeling?</label>
+            <img src="happy-unicorn.png" id="happy-image" class="emotion-image">
+            <div class="emotion-button-container">
+                <div class="emotion-option">
+                    <button id="SadButton" class="emotion-button sad-button">Sad!</button>
+                    <button id="SpeakerButtonSad" class="speaker-button"></button>
+                </div>
+                <div class="emotion-option">
+                    <button id="HappyButton" class="emotion-button happy-button">Happy!</button>
+                    <button id="SpeakerButtonHappy" class="speaker-button"></button>
+                </div>
+                <div class="emotion-option">
+                    <button id="ScaredButton" class="emotion-button scared-button">SCARED!</button>
+                    <button id="SpeakerButtonScared" class="speaker-button"></button>
+                </div>
+                <div class="emotion-option">
+                    <button id="AngryButton" class="emotion-button angry-button">Angry!</button>
+                    <button id="SpeakerButtonAngry" class="speaker-button"></button>
+                </div>
+            </div>
+            <img src="happy-gif.gif" id="happy-gif" class="hidden-gif">
+        </div>
+
+        <div id="Gscary" class="screen" style="display: none;">
+            <label class="question-label">What Emotion is this person feeling?</label>
+            <img src="scary-unicorn.png" id="scary-image" class="emotion-image">
+            <div class="emotion-button-container">
+                <div class="emotion-option">
+                    <button id="SadButton" class="emotion-button sad-button">Sad!</button>
+                    <button id="SpeakerButtonSad" class="speaker-button"></button>
+                </div>
+                <div class="emotion-option">
+                    <button id="HappyButton" class="emotion-button happy-button">Happy!</button>
+                    <button id="SpeakerButtonHappy" class="speaker-button"></button>
+                </div>
+                <div class="emotion-option">
+                    <button id="ScaredButton" class="emotion-button scared-button">SCARED!</button>
+                    <button id="SpeakerButtonScared" class="speaker-button"></button>
+                </div>
+                <div class="emotion-option">
+                    <button id="AngryButton" class="emotion-button angry-button">Angry!</button>
+                    <button id="SpeakerButtonAngry" class="speaker-button"></button>
+                </div>
+            </div>
+            <img src="scary-gif.gif" id="scary-gif" class="hidden-gif">
+        </div>
+
+        <div id="CorrectScreen" class="screen" style="display: none;">
+            <label id="correct-label">Correct! Good job!</label>
+            <button id="continue-button">Continue</button>
+        </div>
+
+        <div id="FinishScreen" class="screen" style="display: none;">
+            <label id="finish-label">You finished! Good job!</label>
+            <button id="restart-button">Restart</button>
+        </div>
+
+        <div id="CreditsScreen" class="screen" style="display: none;">
+            <button id="credits-close-button" class="close-button">X</button>
+            <img src="credits-image.png" id="credits-image">  </div>
+
+        <div id="DataDisplayScreen" class="screen" style="display: none;">
+            <button id="data-close-button" class="close-button">X</button>
+            </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
