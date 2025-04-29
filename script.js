@@ -1,177 +1,206 @@
-// Initialize variables
-var pressCount = 0;
-var activescreen = ""; // Initialize to an empty string
-var giftimeout;
-var PlayCount = 0;
-var firstTime = false;
-var gifreply = 4000;
-var giflength = 2000;
-var DataScreenPress = 1;
-var FinishI = 1;
-var ButtonData = [
-    ["Sclick", "Hclick", "Fclick", "Aclick"],
-    [0, 0, 0, 0]
-];
-var dataArray = [];
-
-var stageodr;
-var stagenameodr;
-var onmobile = false;
-
-// Array of speaker button IDs (Consider using classes for easier selection)
-var speakerButtons = [
-    "SpeakerButtonSad",
-    "SpeakerButtonAngry",
-    "SpeakerButtonScared",
-    "SpeakerButtonHappy"
-];
-
-var CorrectSFX = [
-    "assets/Correct-Good-Job.mp3",
-    "assets/Excellent.mp3",
-    "assets/Fantastic.mp3",
-    "assets/Way-to-go.mp3"
-];
-
-var WrongSFX = [
-    "assets/A-different-way.mp3",
-    "assets/Almost-there.mp3",
-    "assets/Wrong-Try-Again.mp3",
-    "assets/Hmmm.mp3"
-];
-
-// Array of corresponding sound files for emotions
-var soundFiles = [
-    "assets/Sad-sounds.mp3",
-    "assets/Angry.mp3",
-    "assets/scared-sounds.mp3",
-    "assets/Happy-Sound.mp3"
-];
-
-// --- Utility Functions ---
-
-// Function to show a screen and hide others
-function showScreen(screenId) {
-    $(".screen").hide();
-    $("#" + screenId).show();
-    activescreen = screenId;
-    console.log("Showing screen:", screenId); // Debugging
-}
-
-// Function to play a sound
+// Utility function
 function playSound(soundFile) {
     var audio = new Audio(soundFile);
     audio.play();
 }
 
-// --- Device Selection ---
-
-$("#Desktop").click(function() {
-    onmobile = false;
-    $(".speaker-button").hide();
-    showScreen("NameInputScreen");
-});
-
-$("#Mobile").click(function() {
-    onmobile = true;
-    $(".speaker-button").show();
-    showScreen("NameInputScreen");
-});
-
-// --- Name Input Screen ---
-
-$("#name-enter-button").click(function() {
-    let userName = $("#name-input-field").val();
-    let greetingText = userName ? "Hi, " + userName + "!" : "Hi!"; // Ternary operator
-    $("#greeting-message").text(greetingText);
-    showScreen("GreetingScreen");
-    if (!userName) {
-        alert("Please enter your name!");
+class ScreenManager {
+    constructor() {
+        this.screens = $(".screen");
+        this.activeScreen = "";
     }
-});
 
-$("#credits-button").click(function() {
-    showScreen("CreditsScreen");
-});
+    showScreen(screenId) {
+        this.screens.hide();
+        $("#" + screenId).show();
+        this.activeScreen = screenId;
+        console.log("Showing screen:", screenId);
+        window.game.attachEmotionButtonHandlers(); // Attach handlers after showing screen
+    }
 
-$("#data-button").click(function() {
-    showScreen("DataDisplayScreen");
-});
-
-// --- Greeting Screen ---
-
-$("#begin-button").click(function() {
-    showScreen("Gsad");
-});
-
-// --- Emotion Screens ---
-
-function handleEmotionClick(selectedEmotion, correctEmotion, nextScreen) {
-    if (selectedEmotion === correctEmotion) {
-        playSound(CorrectSFX[Math.floor(Math.random() * CorrectSFX.length)]);
-        showScreen("CorrectScreen");
-        $("#continue-button").data("nextScreen", nextScreen);
-    } else {
-        playSound(WrongSFX[Math.floor(Math.random() * WrongSFX.length)]);
+    getActiveScreen() {
+        return this.activeScreen;
     }
 }
 
-$("#SadButton").click(function() {
-    handleEmotionClick("Sad", "Sad", "Gangry");
-});
+class Emotion {
+    constructor(name, imageId, questionId, buttonIds, soundFiles, nextScreen) {
+        this.name = name;
+        this.imageId = imageId;
+        this.questionId = questionId;
+        this.buttonIds = buttonIds;
+        this.soundFiles = soundFiles;
+        this.nextScreen = nextScreen;
+        this.correctSFX = [
+            "assets/Correct-Good-Job.mp3",
+            "assets/Excellent.mp3",
+            "assets/Fantastic.mp3",
+            "assets/Way-to-go.mp3"
+        ];
+        this.wrongSFX = [
+            "assets/A-different-way.mp3",
+            "assets/Almost-there.mp3",
+            "assets/Wrong-Try-Again.mp3",
+            "assets/Hmmm.mp3"
+        ];
+        this.buttons = {};
+        for (const key in buttonIds) {
+            this.buttons[key] = $("#" + buttonIds[key]);
+            console.log(`  - Emotion ${name}: Button ${key}:`, this.buttons[key]);
+        }
+    }
 
-$("#AngryButton").click(function() {
-    handleEmotionClick("Angry", "Angry", "Gscared");
-});
+    handleButtonClick(clickedButtonName, emotionName) {
+        console.log(`---ACTION--- Button ${clickedButtonName} clicked for ${emotionName}`);
+        // Direct comparison with emotion name
+        if (clickedButtonName === emotionName) {
+            playSound(this.correctSFX[Math.floor(Math.random() * this.correctSFX.length)]);
+            window.game.screenManager.showScreen("CorrectScreen");
+            window.game.nextEmotion();
+        } else {
+            playSound(this.wrongSFX[Math.floor(Math.random() * this.wrongSFX.length)]);
+        }
+    }
 
-$("#ScaredButton").click(function() {
-    handleEmotionClick("Scared", "Scared", "Ghappy");
-});
-
-$("#HappyButton").click(function() {
-    handleEmotionClick("Happy", "Happy", "CorrectScreen");
-});
-
-// --- Speaker Buttons ---
-
-function attachSpeakerSound(buttonId, soundFile) {
-    $("#" + buttonId).click(function() {
-        playSound(soundFile);
-    });
+    attachSpeakerButtonHandlers() {
+        for (let i = 0; i < this.buttonIds.length; i++) {
+            let speakerButtonId = "SpeakerButton" + (i + 1);
+            $("#" + speakerButtonId).off('click').on('click', () => {
+                console.log(`Speaker button ${speakerButtonId} clicked`);
+                playSound(this.soundFiles[i]);
+            });
+        }
+    }
 }
 
-speakerButtons.forEach((buttonId, index) => {
-    attachSpeakerSound(buttonId, soundFiles[index]);
-});
-
-// --- Correct Screen ---
-
-$("#continue-button").click(function() {
-    let nextScreen = $(this).data("nextScreen");
-    if (nextScreen) {
-        showScreen(nextScreen);
-    } else {
-        showScreen("FinishScreen");
+class Game {
+    constructor() {
+        this.screenManager = new ScreenManager();
+        this.userName = "";
+        this.onMobile = false;
+        this.emotions = {};
+        this.emotionOrder = ["Gsad", "Gangry", "Ghappy", "Gscary"];
+        this.currentEmotionIndex = 0;
+        this.setupEventListeners();
+        console.log("Game initialized (constructor)");
+        window.game = this;
     }
-});
 
-// --- Finish Screen ---
+    createEmotions() {
+        this.emotions = {
+            "Gsad": new Emotion(
+                "Sad",
+                "sad-unicorn.png",
+                "label3",
+                { sad: "SadButton", happy: "HappyButton", scared: "ScaredButton", angry: "AngryButton" },
+                ["assets/Sad-sounds.mp3", "assets/Happy-Sound.mp3", "assets/scared-sounds.mp3", "assets/Angry.mp3"],
+                "Gangry"
+            ),
+            "Gangry": new Emotion(
+                "Angry",
+                "angry-unicorn.png",
+                "label4",
+                { sad: "SadButton", happy: "HappyButton", scared: "ScaredButton", angry: "AngryButton" },
+                ["assets/Sad-sounds.mp3", "assets/Happy-Sound.mp3", "assets/scared-sounds.mp3", "assets/Angry.mp3"],
+                "Ghappy"
+            ),
+            "Ghappy": new Emotion(
+                "Happy",
+                "happy-unicorn.png",
+                "label5",
+                { sad: "SadButton", happy: "HappyButton", scared: "ScaredButton", angry: "AngryButton" },
+                ["assets/Sad-sounds.mp3", "assets/Happy-Sound.mp3", "assets/scared-sounds.mp3", "assets/Angry.mp3"],
+                "Gscary"
+            ),
+            "Gscary": new Emotion(
+                "Scared",
+                "scary-unicorn.png",
+                "label6",
+                { sad: "SadButton", happy: "HappyButton", scared: "ScaredButton", angry: "AngryButton" },
+                ["assets/Sad-sounds.mp3", "assets/Happy-Sound.mp3", "assets/scared-sounds.mp3", "assets/Angry.mp3"],
+                "FinishScreen"
+            )
+        };
+        console.log("Emotions created:", this.emotions);
+    }
 
-$("#restart-button").click(function() {
-    showScreen("MorD");
-});
+    setupEventListeners() {
+        $("#Desktop").click(() => {
+            this.onMobile = false;
+            $(".speaker-button").hide();
+            this.screenManager.showScreen("NameInputScreen");
+            console.log("Desktop clicked");
+        });
 
-// --- "X" Buttons ---
-$("#CreditX").click(function() {
-    showScreen("NameInputScreen"); // Or "MorD" if you want to go back to the beginning
-});
+        $("#Mobile").click(() => {
+            this.onMobile = true;
+            $(".speaker-button").show();
+            this.screenManager.showScreen("NameInputScreen");
+            console.log("Mobile clicked");
+        });
 
-$("#DataX").click(function() {
-    showScreen("NameInputScreen"); // Or "MorD"
-});
+        $("#name-enter-button").click(() => this.handleNameEnter());
+        $("#credits-button").click(() => this.screenManager.showScreen("CreditsScreen"));
+        $("#data-button").click(() => this.screenManager.showScreen("DataDisplayScreen"));
+        $("#begin-button").click(() => this.startGame());
+        $("#continue-button").click(() => this.nextEmotion());
+        $("#restart-button").click(() => this.screenManager.showScreen("MorD"));
+        $("#credits-close-button").click(() => this.screenManager.showScreen("NameInputScreen"));
+        $("#data-close-button").click(() => this.screenManager.showScreen("NameInputScreen"));
+        console.log("Event listeners set up");
+    }
 
-// --- Initialization ---
+    handleNameEnter() {
+        this.userName = $("#name-input-field").val();
+        let greetingText = this.userName ? "Hi, " + this.userName + "!" : "Hi!";
+        $("#greeting-message").text(greetingText);
+        this.screenManager.showScreen("GreetingScreen");
+        if (!this.userName) {
+            alert("Please enter your name!");
+        }
+    }
 
-$(document).ready(function() {
-    showScreen("MorD");
+    startGame() {
+        this.createEmotions();
+        this.currentEmotionIndex = 0;
+        this.showCurrentEmotion();
+        console.log("startGame() called, showing first emotion");
+    }
+
+    showCurrentEmotion() {
+        this.screenManager.showScreen(this.emotionOrder[this.currentEmotionIndex]);
+    }
+
+    nextEmotion() {
+        setTimeout(() => {
+            this.currentEmotionIndex++;
+            if (this.currentEmotionIndex < this.emotionOrder.length) {
+                this.showCurrentEmotion();
+            } else {
+                this.screenManager.showScreen("FinishScreen");
+            }
+        }, 3000);
+    }
+
+    attachEmotionButtonHandlers() {
+        const emotionKey = this.emotionOrder[this.currentEmotionIndex];
+        const emotion = this.emotions[emotionKey];
+        const container = $("#" + emotionKey + " .emotion-button-container"); // Target the container
+        container.off('click').on('click', (event) => { // Use event delegation
+            if (event.target.classList.contains('emotion-button')) {
+                const clickedButtonName = event.target.textContent.replace('!', ''); // Get button text
+                emotion.handleButtonClick(clickedButtonName, emotion.name);
+            }
+        });
+        emotion.attachSpeakerButtonHandlers();
+    }
+}
+
+$(document).ready(() => {
+    console.log("---DOM READY--- Started");
+    window.game = new Game();
+    console.log("Game instance created:", window.game);
+    game.screenManager.showScreen("MorD");
+    console.log("MorD screen shown");
+    console.log("---DOM READY--- Finished");
 });
