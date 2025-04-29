@@ -1,9 +1,13 @@
-/* Global Styles */
+/* ==========================================================================
+   1.  Global Styles
+   ========================================================================== */
+
 body {
     font-family: sans-serif;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Prevent scrolling */
+    overflow: hidden;
+    /* Prevent scrolling */
 }
 
 .screen {
@@ -15,7 +19,10 @@ body {
     left: 0;
 }
 
-/* 1. Device Selection Screen */
+/* ==========================================================================
+   2.  Device Selection Screen (MorD)
+   ========================================================================== */
+
 #MorD {
     background: linear-gradient(to bottom, #8e24aa, #ffb300, #311b92);
     display: flex;
@@ -28,39 +35,46 @@ body {
     overflow: hidden;
 }
 
-#MorD::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50px;
-    background-color: #4CAF50;
-    z-index: 0;
-}
-
+/* Colored bars at the bottom */
+#MorD::before,
 #MorD::after {
     content: '';
     position: absolute;
-    bottom: 50px;
     left: 0;
     width: 100%;
+    z-index: 0;
+    /* Behind content */
+}
+
+#MorD::before {
+    bottom: 0;
+    height: 50px;
+    background-color: #4caf50;
+    /* Green */
+}
+
+#MorD::after {
+    bottom: 50px;
     height: 80px;
     background-color: #311b92;
-    z-index: 0;
+    /* Dark Purple */
 }
 
 #device-select-label {
     font-size: 24px;
     font-weight: bold;
     color: #212121;
+    /* Dark Gray */
     font-family: 'Arial Black', Gadget, sans-serif;
     margin-bottom: 40px;
     z-index: 1;
+    /* Above bars */
 }
 
-#Desktop {
+#Desktop,
+#Mobile {
     background-color: #29b6f6;
+    /* Light Blue */
     color: white;
     border: 4px solid #000;
     border-radius: 5px;
@@ -70,26 +84,14 @@ body {
     cursor: pointer;
     font-family: sans-serif;
     margin: 0 20px 20px 20px;
-    z-index: 1;
-}
-
-#Mobile {
-    background-color: #29b6f6;
-    color: white;
-    border: 4px solid #000;
-    border-radius: 20px;
-    padding: 20px 40px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    font-family: sans-serif;
-    margin: 0 20px 20px 20px;
+    /* Spacing around buttons */
     z-index: 1;
 }
 
 #Desktop:hover,
 #Mobile:hover {
     background-color: #0288d1;
+    /* Darker Blue on hover */
 }
 
 #copyright-label {
@@ -97,13 +99,17 @@ body {
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
+    /* Center horizontally */
     font-size: 14px;
     color: white;
     font-family: sans-serif;
     z-index: 1;
 }
 
-/* 2. Name Input Screen */
+/* ==========================================================================
+   3.  Name Input Screen
+   ========================================================================== */
+
 #NameInputScreen {
     background: linear-gradient(to bottom, #8e24aa, #ffb300, #311b92);
     display: flex;
@@ -115,52 +121,35 @@ body {
     overflow: hidden;
 }
 
-#NameInputScreen::before {
+/* Colored bars at the bottom (same as MorD) */
+#NameInputScreen::before,
+#NameInputScreen::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 50px;
-    background-color: #4CAF50;
     z-index: 0;
+}
+
+#NameInputScreen::before {
+    height: 50px;
+    background-color: #4caf50;
 }
 
 #NameInputScreen::after {
-    content: '';
-    position: absolute;
     bottom: 50px;
-    left: 0;
-    width: 100%;
     height: 80px;
     background-color: #311b92;
-    z-index: 0;
 }
 
-#credits-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: #ba68c8;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    font-family: sans-serif;
-    z-index: 1;
-}
-
-#credits-button:hover {
-    background-color: #9c27b0;
-}
-
+/* "Credits" and "Data" buttons */
+#credits-button,
 #data-button {
     position: absolute;
     top: 20px;
-    right: 20px;
     background-color: #ba68c8;
+    /* Light Purple */
     color: white;
     border: none;
     border-radius: 20px;
@@ -171,8 +160,18 @@ body {
     z-index: 1;
 }
 
+#credits-button {
+    left: 20px;
+}
+
+#data-button {
+    right: 20px;
+}
+
+#credits-button:hover,
 #data-button:hover {
     background-color: #9c27b0;
+    /* Darker Purple on hover */
 }
 
 #name-input-label {
@@ -188,10 +187,12 @@ body {
 #name-input-field {
     background-color: white;
     border: 1px solid #ccc;
+    /* Light Gray border */
     border-radius: 10px;
     padding: 15px;
     font-size: 18px;
     color: #757575;
+    /* Gray text */
     text-align: center;
     margin-bottom: 20px;
     width: 80%;
@@ -201,6 +202,7 @@ body {
 
 #name-enter-button {
     background-color: #ffc107;
+    /* Amber */
     color: #212121;
     border: none;
     border-radius: 10px;
@@ -213,6 +215,7 @@ body {
 
 #name-enter-button:hover {
     background-color: #ff9800;
+    /* Darker Amber on hover */
 }
 
 #name-input-copyright-label {
@@ -226,7 +229,10 @@ body {
     z-index: 1;
 }
 
-/* 3. Greeting Screen */
+/* ==========================================================================
+   4.  Greeting Screen
+   ========================================================================== */
+
 #GreetingScreen {
     background: linear-gradient(to bottom, #8e24aa, #ffb300, #311b92);
     display: flex;
@@ -239,26 +245,26 @@ body {
     overflow: hidden;
 }
 
-#GreetingScreen::before {
+/* Colored bars at the bottom (same as others) */
+#GreetingScreen::before,
+#GreetingScreen::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 50px;
-    background-color: #4CAF50;
     z-index: 0;
 }
 
+#GreetingScreen::before {
+    height: 50px;
+    background-color: #4caf50;
+}
+
 #GreetingScreen::after {
-    content: '';
-    position: absolute;
     bottom: 50px;
-    left: 0;
-    width: 100%;
     height: 80px;
     background-color: #311b92;
-    z-index: 0;
 }
 
 #greeting-message {
@@ -283,6 +289,7 @@ body {
     padding: 15px 40px;
     font-size: 24px;
     background-color: #8e24aa;
+    /* Purple */
     color: white;
     border: none;
     border-radius: 10px;
@@ -293,6 +300,7 @@ body {
 
 #begin-button:hover {
     background-color: #6a1b9a;
+    /* Darker Purple on hover */
 }
 
 #greeting-copyright-label {
@@ -306,17 +314,42 @@ body {
     z-index: 1;
 }
 
-/* Emotion Selection Screens (e.g., #Gangry, #Gsad) */
-.emotion-screen {
-    background-image: url("Colorful-background-(1).png");
-    background-size: cover;
+/* ==========================================================================
+   5.  Emotion Selection Screens (e.g., #Gangry, #Gsad)
+   ========================================================================== */
+
+.game-emotion-screen {
+    /* Background Color (Instead of Image) */
+    /* We will set this dynamically per screen */
+    background-color: #f0f0f0;  /* Default light gray */
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
+    width: 100%;
+    height: 100vh;
 }
+
+/* Specific background colors for each emotion */
+#Gsad {
+    background-color: #bbdefb; /* Light blue */
+}
+
+#Gangry {
+    background-color: #ef9a9a; /* Light red */
+}
+
+#Ghappy {
+    background-color: #fff59d; /* Light yellow */
+}
+
+#Gscary {
+    background-color: #a5d6a7; /* Light green */
+}
+
 
 .emotion-image {
     max-width: 80%;
@@ -326,10 +359,11 @@ body {
 }
 
 .emotion-question {
-    font-size: 18px;
+    font-size: 24px;
     font-weight: bold;
     color: #333;
-    margin-bottom: 10px;
+    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); */ /* Optional shadow */
+    margin-bottom: 15px;
     text-align: center;
     font-family: Impact, Charcoal, sans-serif;
 }
@@ -347,71 +381,94 @@ body {
     align-items: center;
     justify-content: center;
     margin: 10px;
-    position: relative; /* For speaker button positioning */
+    position: relative;
 }
 
 .emotion-button {
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 12px 24px;
+    font-size: 18px;
     font-weight: bold;
     color: white;
     border: none;
     cursor: pointer;
     margin: 5px;
     font-family: Arial Black, Gadget, sans-serif;
-    white-space: nowrap; /* Prevent text wrapping */
+    white-space: nowrap;
+    transition: background-color 0.2s ease-in-out;
 }
 
+/* Specific button styles */
 #SadButton,
 .sad-button {
     background-color: #2196f3;
-    border-radius: 5px;
+    border-radius: 8px;
+}
+
+#SadButton:hover,
+.sad-button:hover {
+    background-color: #1976d2;
 }
 
 #HappyButton,
 .happy-button {
-    background-color: #ffeb3b;
-    color: #333;
-    border-radius: 20px;
-    /* Use clip-path for octagon */
+    background-color: #ffc107;
+    color: #212121;
+    border-radius: 25px;
     clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-    padding: 10px 15px; /* Adjust padding */
+    padding: 12px 20px;
+}
+
+#HappyButton:hover,
+.happy-button:hover {
+    background-color: #ffb300;
 }
 
 #ScaredButton,
 .scared-button {
     background-color: #4caf50;
-    /* Use transform for diamond */
     transform: rotate(-45deg);
-    width: 100px; /* Adjust width */
-    height: 30px; /* Adjust height */
+    width: 120px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 8px;
+}
+
+#ScaredButton:hover,
+.scared-button:hover {
+    background-color: #43a047;
 }
 
 #AngryButton,
 .angry-button {
     background-color: #f44336;
-    /* Use clip-path for octagon */
     clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-    padding: 10px 15px; /* Adjust padding */
+    padding: 12px 20px;
+    border-radius: 8px;
 }
 
+#AngryButton:hover,
+.angry-button:hover {
+    background-color: #d32f2f;
+}
+
+/* Speaker button */
 .speaker-button {
     background-color: transparent;
     border: none;
     width: 30px;
     height: 30px;
-    background-image: url("speaker-icon.png"); /* Replace with your speaker icon */
+    background-image: url("assets/speaker-icon.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
     position: absolute;
     top: 50%;
-    right: -35px; /* Adjust spacing from button */
+    right: -35px;
     transform: translateY(-50%);
+    display: none;
 }
 
 .emotion-copyright-label {
@@ -421,11 +478,102 @@ body {
     transform: translateX(-50%);
     font-size: 14px;
     color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
-/* 5. Correct Answer Screen */
+/* ==========================================================================
+   6.  Correct Answer Screen
+   ========================================================================== */
+
 #CorrectScreen {
-    background-color: #f0f0f0;
+    /* Background Gradient (Consistent with other screens) */
+    background: linear-gradient(to bottom, #8e24aa, #ffb300, #311b92);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+#CorrectScreen::before,
+#CorrectScreen::after {
+    /* Bottom Bars (Consistent with other screens) */
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 0;
+}
+
+#CorrectScreen::before {
+    bottom: 0;
+    height: 50px;
+    background-color: #4caf50;
+    /* Green */
+}
+
+#CorrectScreen::after {
+    bottom: 50px;
+    height: 80px;
+    background-color: #311b92;
+    /* Dark Purple */
+}
+
+#correct-label {
+    font-size: 32px;
+    font-weight: bold;
+    color: #fff;
+    /* White text */
+    font-family: 'Arial Black', Gadget, sans-serif;
+    margin-bottom: 20px;
+    z-index: 1;
+}
+
+#continue-button {
+    background-color: #8bc34a;
+    /* Light Green */
+    color: #212121;
+    /* Dark Gray text */
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: sans-serif;
+    z-index: 1;
+}
+
+#continue-button:hover {
+    background-color: #689f38;
+    /* Darker Green on hover */
+}
+
+#correct-copyright-label {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: white;
+    font-family: sans-serif;
+    z-index: 1;
+}
+
+/* ==========================================================================
+   7.  Finish Screen
+   ========================================================================== */
+
+#FinishScreen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Use viewport height like emotion screens */
+    background-color: #f0f0f0; /* Default background color */
+    z-index: 1000;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -433,8 +581,34 @@ body {
     text-align: center;
 }
 
-#correct-label {
-    font-size: 32px;
-    font-weight: bold;
+#finish-label {
+    font-size: 32px; /* Larger, more celebratory */
+    font-weight: bold; /* Keep bold */
+    color: #333; /* Dark text */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Consistent shadow */
+    margin-bottom: 30px;
+    font-family: Impact, Charcoal, sans-serif; /* Match emotion questions */
+}
+
+#restart-button {
+    padding: 12px 24px; /* Same padding as emotion buttons */
+    font-size: 18px; /* Same font size */
+    font-weight: bold; /* Keep bold */
     color: white;
-    font-family:
+    border: none;
+    cursor: pointer;
+    margin-top: 20px; /* Add some space */
+    font-family: Arial Black, Gadget, sans-serif; /* Match emotion buttons */
+    white-space: nowrap;
+    transition: background-color 0.2s ease-in-out; /* Smooth transition */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #4caf50; /* Primary button color */
+}
+
+#restart-button:hover {
+    background-color: #43a047; /* Darker on hover */
+}
+
+/* Add specific background color if needed */
+/* Example: If you want FinishScreen to be light orange */
+/* #FinishScreen { background-color: #ffe0b2; } */
